@@ -1,0 +1,688 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <title>Peta Interaktif Desa Seliling</title>
+
+        <link rel="stylesheet" href="./resources/ol.css">
+        <link rel="stylesheet" href="resources/fontawesome-all.min.css">
+        <link rel="stylesheet" type="text/css" href="resources/horsey.min.css">
+        <link rel="stylesheet" type="text/css" href="resources/ol3-search-layer.min.css">
+        <link rel="stylesheet" href="./resources/ol-layerswitcher.css">
+        <link rel="stylesheet" href="./resources/qgis2web.css">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+
+        <style>
+        html, body {
+            background-color: #ffffff;
+        }
+        .ol-control > * {
+            background-color: #f8f8f8!important;
+            color: #444444!important;
+            border-radius: 0px;
+        }
+        .ol-attribution a, .gcd-gl-input::placeholder, .search-layer-input-search::placeholder {
+            color: #444444!important;
+        }
+        .search-layer-input-search {
+            background-color: #f8f8f8!important;
+        }
+        .ol-control > *:focus, .ol-control >*:hover {
+            background-color: rgba(248, 248, 248, 0.7)!important;
+        } 
+        .ol-control {
+            background-color: rgba(255,255,255,.4) !important;
+            padding: 2px !important;
+        } 
+        </style>
+
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+
+
+
+
+        <title>Peta Interaktif Desa Seliling</title>
+        <!-- Custom Styling -->
+        <style>
+            /* General Reset */
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: 'Poppins', sans-serif; /* Menggunakan font Poppins untuk seluruh halaman */
+                color: #333; /* Warna teks default yang lebih gelap agar nyaman dibaca */
+                line-height: 1.6; /* Mengatur jarak antar baris agar lebih nyaman */
+            }
+
+            /* Navbar */
+            header {
+                background: linear-gradient(135deg, #0056b3, #00aaff);
+                color: #fff;
+                padding: 1% ;
+                position: fixed;
+                top: 0;
+                width: 100%;
+                z-index: 1000;
+                box-shadow: 0 4px 6px rgba(1, 255, 208, 0.588); /* Optional: adds shadow for depth */
+            }
+
+            .logo {
+                font-size: 1.5rem;
+                font-weight: bold;
+                margin-left: 20px;
+            }
+
+            nav {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                max-width: 1000px;
+                margin: auto;
+            }
+
+            .navbar {
+                list-style: none;
+                display: flex;
+                justify-content: flex-end; /* Make sure the navbar links are aligned properly */
+                margin-right: 1rem; /* Add spacing if needed */
+            }
+
+            .navbar li {
+                margin: 0 1rem;
+            }
+
+            .navbar a {
+                color: #fff;
+                text-decoration: none;
+                font-weight: bold;
+                transition: color 0.3s;
+            }
+
+            .navbar a:hover {
+                color: #ddd;
+            }
+
+            /* Hero Section */
+            .hero {
+                background: url('images/bg.png') no-repeat center center/cover;
+                color: #fff;
+                text-align: center;
+                padding: 5rem 2rem;
+                background-size: cover;
+                background-position: center center;
+                height: 100vh;
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            }
+
+            .hero h1 {
+                font-size: 3.5rem;
+                margin-bottom: 1.5rem;
+                font-weight: bold;
+                letter-spacing: 2px;
+                text-transform: uppercase;
+            }
+
+            .hero p {
+                font-size: 1.5rem;
+                margin-bottom: 2rem;
+                line-height: 1.6;
+                max-width: 700px;
+                text-align: center;
+                font-style: italic;
+            }
+
+            .cta-button {
+                display: inline-block;
+                padding: 0.8rem 2rem;
+                background-color: #333;
+                color: #fff;
+                text-decoration: none;
+                font-weight: bold;
+                border-radius: 50px;
+                font-size: 1.2rem;
+                transition: all 0.3s ease;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+
+            .cta-button:hover {
+                background-color: #555;
+                transform: translateY(-3px);
+                box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            }
+
+            .cta-button:active {
+                transform: translateY(1px);
+            }
+
+            /* Visi dan Misi Section */
+            #visi-misi {
+                padding: 4rem 2rem;
+                background-color: #f9f9f9;
+                box-sizing: border-box;
+                min-height: 100vh; /* Mengatur tinggi minimal menjadi 100% dari tinggi viewport (layar) */
+                display: flex;
+                flex-direction: column;
+                justify-content: center; /* Menjaga agar konten tetap terpusat secara vertikal */
+            }
+
+            #visi-misi h2 {
+                text-align: center; /* Menjaga judul tetap di tengah */
+                font-size: 2.8rem;
+                margin-bottom: 2rem;
+                color: #0056b3;
+                font-weight: 600; /* Menambahkan ketebalan font untuk memberikan penekanan */
+                letter-spacing: 1px; /* Menambahkan jarak antar huruf agar lebih elegan */
+            }
+
+            #visi-misi .container {
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+
+            .visi-misi-text {
+                text-align: left; /* Membuat semua teks selain h2 menjadi rata kiri */
+                margin: 0 1rem;
+                font-weight: 400; /* Menggunakan font normal untuk teks deskripsi */
+            }
+
+            .visi-misi-text p,
+            .visi-misi-text ul {
+                margin-left: 1.5rem; /* Menambahkan margin kiri agar teks ul dan p tidak terlalu dekat dengan sisi */
+            }
+
+            .visi-misi-text ul {
+                list-style-type: disc;
+                padding-left: 20px; /* Menambahkan indentasi pada daftar */
+            }
+
+            .misi h3 {
+                font-size: 2rem;
+                margin-bottom: 1rem;
+                color: #0056b3;
+                font-weight: 600;
+                letter-spacing: 0.5px;
+            }
+
+            /* Kontainer untuk Foto Kegiatan Desa */
+            .foto-kegiatan {
+                margin-top: 3rem;
+                padding: 2rem;
+                background-color: #fff;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+                border-radius: 8px;
+                text-align: center;
+            }
+
+            .foto-kegiatan h3 {
+                font-size: 2.2rem;
+                margin-bottom: 1.5rem;
+                color: #0056b3;
+                font-weight: 600;
+                letter-spacing: 1px;
+            }
+
+            .foto-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Grid otomatis menyesuaikan ukuran */
+                gap: 1.5rem;
+                justify-items: center;
+            }
+
+            .foto-item {
+                position: relative;
+                overflow: hidden;
+                border-radius: 8px; /* Membuat border gambar bulat */
+                background-color: #f9f9f9; /* Menambahkan latar belakang agar gambar tampak lebih menonjol */
+            }
+
+            .foto-item img {
+                width: 100%;  /* Gambar akan mengisi lebar kontainer */
+                height: 200px;  /* Menentukan tinggi yang sama untuk semua gambar */
+                object-fit: cover;  /* Memastikan gambar menutupi area tanpa merusak proporsi */
+                border-radius: 8px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+
+            .foto-item img:hover {
+                transform: scale(1.05); /* Efek hover untuk memperbesar gambar */
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            }
+
+            /* Styling untuk Deskripsi Foto */
+            .foto-description {
+                padding: 0.5rem;
+                font-size: 1rem;
+                color: #555;
+                text-align: center;
+                background-color: #fff;
+                border-radius: 8px;
+                margin-top: 0.5rem;
+                font-style: italic;
+                line-height: 1.5;
+}
+
+            /* Responsif */
+            @media (max-width: 768px) {
+                #visi-misi h2 {
+                    font-size: 2rem;
+                }
+
+                .visi p {
+                    font-size: 1.2rem;
+                }
+
+                .misi li {
+                    font-size: 1.1rem;
+                }
+
+                .foto-grid {
+                    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Mengatur grid untuk perangkat kecil */
+                }
+
+                .foto-item img {
+                    max-width: 100%;
+                    border-radius: 6px;
+                }
+            }
+
+            @media (max-width: 480px) {
+                .foto-kegiatan {
+                    padding: 1.5rem;
+                }
+
+                .foto-grid {
+                    grid-template-columns: 1fr; /* Menampilkan foto dalam satu kolom pada layar sangat kecil */
+                }
+            }
+
+
+
+            /* geografis */
+            #geografis {
+                padding: 2rem; /* Menghapus padding agar elemen bisa mengisi seluruh layar */
+                height: 100vh; /* Membuat tinggi #geografis 100% dari tinggi layar */
+                background-color: #f4f4f4;
+                text-align: center;
+                box-sizing: border-box;
+                display: flex;
+                flex-direction: column;
+                justify-content: center; /* Menjaga konten tetap berada di tengah vertikal */
+                align-items: center; /* Menjaga konten tetap berada di tengah horizontal */
+            }
+
+            /* Teks di dalam #geografis */
+            #geografis h2 {
+                font-size: 2.5rem;
+                margin-bottom: 2rem;
+                color: #0056b3;
+            }
+
+            #geografis p {
+                font-size: 1.5rem;
+                line-height: 1.6;
+                color: #333;
+                margin-top: 1rem;
+            }
+
+            #geografis ul {
+                list-style-type: none; /* Menghilangkan bullet point */
+                padding-left: 0;
+                margin-left: 20px;
+            }
+
+            #geografis li {
+                font-size: 1.2rem; /* Ukuran font lebih besar */
+                margin-bottom: 1rem; /* Jarak antar item */
+                color: #333;
+            }
+
+
+            #map-container {
+                margin-top: 60px;
+                width: 100%;
+                height: 500px; /* Tinggi peta */
+                margin: 1rem auto;
+                border: 5px solid #0056b3; /* Warna pembatas biru */
+                border-radius: 10px; /* Sudut pembatas yang melengkung */
+                background-color: #e6f0ff; /* Warna latar belakang peta */
+                box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* Shadow untuk efek depth */
+                overflow: hidden; /* Untuk memastikan tidak ada konten yang meluber */
+            }
+
+            #map {
+                width: 100%;
+                height: 100%;
+                position: relative;
+            }
+
+            #popup {
+                background-color: rgba(255, 255, 255, 0.7);
+                border-radius: 5px;
+                padding: 10px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            }
+
+            #popup-closer {
+                color: #333;
+                font-size: 1.2rem;
+                text-decoration: none;
+            }
+
+            #popup-content {
+                font-size: 1rem;
+                color: #333;
+            }
+
+
+            /* Footer */
+            footer {
+                background-color: #333;
+                color: #fff;
+                padding: 2rem;
+                text-align: center;
+            }
+
+            footer h3 {
+                font-size: 1.8rem;
+                margin-bottom: 1rem;
+            }
+
+            footer p {
+                font-size: 1.1rem;
+                margin-bottom: 1rem;
+            }
+
+            footer .contact-info {
+                list-style: none;
+                padding: 0;
+            }
+
+            footer .contact-info li {
+                margin-bottom: 1rem;
+            }
+
+            footer .contact-info li a {
+                color: #fff;
+                text-decoration: none;
+                font-size: 1.1rem;
+                transition: color 0.3s;
+            }
+
+            footer .contact-info li a:hover {
+                color: #ddd;
+            }
+
+            /* Kontak Section */
+            #kontak {
+                background: linear-gradient(135deg, #0056b3, #00aaff); /* Warna gradien */
+                color: #fff;
+                padding: 3rem 1rem;
+                text-align: center;
+            }
+
+            #kontak h3 {
+                font-size: 2.5rem;
+                margin-bottom: 1.5rem;
+                color: #ffeb3b; /* Warna teks judul */
+                font-weight: 700;
+                text-transform: uppercase;
+            }
+
+            .contact-info {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+
+            .contact-info li {
+                margin: 0.5rem 0;
+            }
+
+            .contact-info a {
+                text-decoration: none;
+                color: #fff;
+                font-size: 1.2rem;
+                font-weight: 500;
+                transition: color 0.3s ease;
+            }
+
+            .contact-info a:hover {
+                color: #ffeb3b; /* Efek hover */
+            }
+
+            /* Alamat */
+            #kontak p {
+                margin-top: 1rem;
+                font-size: 1.1rem;
+                font-style: italic;
+            }
+
+            /* Media Sosial */
+            .social-media {
+                margin-top: 2rem;
+                display: flex;
+                justify-content: center;
+                gap: 1.5rem;
+            }
+
+            .social-icon {
+                font-size: 2.5rem;
+                color: #fff;
+                transition: transform 0.3s ease, color 0.3s ease;
+            }
+
+            .social-icon:hover {
+                color: #ffeb3b; /* Efek hover */
+                transform: scale(1.15); /* Membesarkan sedikit saat di-hover */
+            }
+
+
+
+            /* Responsif */
+            @media (max-width: 768px) {
+                .hero h1 {
+                    font-size: 2.2rem;
+                }
+
+                .hero p {
+                    font-size: 1.1rem;
+                }
+
+                .cta-button {
+                    padding: 0.6rem 1.2rem;
+                }
+
+                #visi-misi h2 {
+                    font-size: 2rem;
+                }
+
+                .map {
+                    height: 300px;
+                }
+            }
+
+            @media (max-width: 480px) {
+                .hero h1 {
+                    font-size: 1.8rem;
+                }
+
+                .hero p {
+                    font-size: 1rem;
+                }
+
+                .cta-button {
+                    padding: 0.5rem 1rem;
+                }
+
+                #visi-misi h2 {
+                    font-size: 1.8rem;
+                }
+
+                .map {
+                    height: 250px;
+                }
+            }
+            
+        </style>
+    </head>
+    <body>
+        <!-- Navbar -->
+        <header>
+            <nav>
+                <div class="logo">Logo Perusahaan</div>
+                <ul class="navbar">
+                    <li><a href="#beranda">Beranda</a></li>
+                    <li><a href="#visi-misi">Visi Misi</a></li>
+                    <li><a href="#geografis">Geografis</a></li>
+                    <li><a href="#kontak">Kontak</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Beranda Section -->
+        <section id="beranda">
+            <div class="hero">
+                <h1>Selamat Datang di Desa Seliling</h1>
+                <p>Seliling adalah sebuah desa di kecamatan Alian, Kebumen, Jawa Tengah, Indonesia. Desa Seliling berjarak sekitar 7 km dari pusat pemerintahan Kabupaten Kebumen, dan 7 km dari kecamatan Alian. Luas wilayah Desa Seliling adalah 2,41 km². Jumlah penduduk Desa Seliling adalah sekitar 5.235 jiwa yang terdiri dari 2.620 jiwa laki-laki dan 2.615 jiwa perempuan.</p>
+                <a href="#geografis" class="cta-button">Lihat Peta</a>
+            </div>
+        </section>
+
+        <!-- Visi dan Misi Section -->
+        <section id="visi-misi">
+            <div class="container">
+                <div class="container">
+                    <div class="visi-misi-text">
+                        <h2>Visi dan Misi Desa Seliling</h2>
+                        <div class="visi">
+                            <p><strong>Visi :</strong> Mewujudkan Desa Seliling yang Maju, Sejahtera, dan Berbudaya, dengan masyarakat yang mandiri, berdaya saing, dan harmonis dalam keberagaman.</p>
+                        </div>
+                        <div class="misi">
+                            <p><strong>Misinya </strong>yakni untuk :</p>
+                            <ul>
+                                <li><strong>Meningkatkan Kualitas Hidup Masyarakat:</strong> Berfokus pada peningkatan taraf hidup masyarakat melalui program-program pemberdayaan ekonomi, penyediaan fasilitas kesehatan, dan pembangunan infrastruktur yang memadai.</li>
+                                <li><strong>Peningkatan Infrastruktur Desa:</strong> Meningkatkan kualitas dan kuantitas infrastruktur desa, seperti jalan, sarana transportasi, air bersih, dan sistem energi untuk mendukung pertumbuhan ekonomi dan kenyamanan hidup.</li>
+                                <li><strong>Meningkatkan Pendidikan dan Kesehatan:</strong> Memastikan akses pendidikan yang berkualitas bagi semua lapisan masyarakat serta peningkatan pelayanan kesehatan yang merata di seluruh wilayah desa.</li>
+                                <li><strong>Pelestarian Nilai Budaya dan Lingkungan:</strong> Melestarikan tradisi dan budaya lokal desa yang kaya serta menjaga keberlanjutan lingkungan hidup dengan mengembangkan program-program yang ramah lingkungan.</li>
+                                <li><strong>Pemberdayaan Masyarakat dan Keterlibatan Aktif:</strong> Mendorong partisipasi aktif seluruh warga dalam pembangunan desa dan pemberdayaan masyarakat melalui pelatihan keterampilan, kegiatan sosial, dan kolaborasi antara pemerintah desa dan masyarakat.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kontainer untuk Foto Kegiatan Desa -->
+                <div class="foto-kegiatan">
+                    <h3>Kegiatan Desa</h3>
+                    <div class="foto-grid">
+                        <div class="foto-item">
+                            <img src="images/kegiatan1.png" alt="Kegiatan Desa 1">
+                            <div class="foto-description">
+                                <p>Pelatihan keterampilan untuk masyarakat dalam meningkatkan ekonomi desa.</p>
+                            </div>
+                        </div>
+                        <div class="foto-item">
+                            <img src="images/kegiatan2.png" alt="Kegiatan Desa 2">
+                            <div class="foto-description">
+                                <p>Program sanitasi untuk memastikan kebersihan dan kesehatan warga desa.</p>
+                            </div>
+                        </div>
+                        <div class="foto-item">
+                            <img src="images/kegiatan3.jpg" alt="Kegiatan Desa 3">
+                            <div class="foto-description">
+                                <p>Penyuluhan lingkungan hidup untuk menjaga kelestarian alam.</p>
+                            </div>
+                        </div>
+                        <div class="foto-item">
+                            <img src="images/kegiatan4.png" alt="Kegiatan Desa 4">
+                            <div class="foto-description">
+                                <p>Pembangunan infrastruktur jalan desa untuk mempermudah akses warga.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <!-- Geografis Section -->
+        <section id="geografis">
+            <h2>Lokasi Desa Seliling</h2>
+            <div id="map-container">
+                <div id="map">
+                    <div id="popup" class="ol-popup">
+                        <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+                        <div id="popup-content"></div>
+                    </div>
+                </div>
+            </div>
+            <p><strong>Desa Seliling</strong> terletak di Kecamatan Alian, Kabupaten Kebumen, Jawa Tengah. Desa ini memiliki luas sekitar 2,41 km² dan dihuni oleh lebih dari 5.000 penduduk. Desa ini dikelilingi oleh pegunungan dan persawahan, serta memiliki akses jalan yang menghubungkan ke pusat kota Kebumen dan Alian.</p>
+            <ul>
+                <li>4 Pedukuhan/Dusun </li>
+                <li>10 Rukun Warga (RW)</li>
+                <li>21 Rukun Tetangga (RT)</li>
+            </ul>
+        </section>
+
+        <!-- Kontak Section -->
+        <footer id="kontak">
+            <h3>Kontak Kami</h3>
+            <ul class="contact-info">
+                <li><a href="mailto:info@desseliling.id">Email: info@desseliling.id</a></li>
+                <li><a href="tel:+628123456789">Telepon: +62 812 3456 789</a></li>
+            </ul>
+            <p>Alamat: Jl. Raya Desa Seliling, Kebumen, Jawa Tengah</p>
+            
+            <!-- Media Sosial -->
+            <div class="social-media">
+                <a href="https://www.instagram.com/desseliling" target="_blank" class="social-icon">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://twitter.com/desseliling" target="_blank" class="social-icon">
+                    <i class="fab fa-twitter"></i>
+                </a>
+            </div>
+        </footer>
+
+
+
+
+
+        <script src="resources/qgis2web_expressions.js"></script>
+        <script src="resources/proj4.js"></script>
+        <script>proj4.defs('EPSG:4326','+proj=longlat +datum=WGS84 +no_defs');</script>
+        <script src="./resources/functions.js"></script>
+        <script src="./resources/ol.js"></script>
+        <script src="resources/horsey.min.js"></script>
+        <script src="resources/ol3-search-layer.js"></script>
+        <script src="./resources/ol-layerswitcher.js"></script>
+        <script src="layers/Sawah_0.js"></script><script src="layers/Hutan_1.js"></script><script src="layers/RT_2.js"></script><script src="layers/RW_3.js"></script><script src="layers/Dusun_4.js"></script><script src="layers/kali_5.js"></script><script src="layers/Bangunan_6.js"></script><script src="layers/JlDesaSeliling_7.js"></script><script src="layers/Poin_8.js"></script><script src="layers/geometrifix_9.js"></script>
+        <script src="styles/Sawah_0_style.js"></script><script src="styles/Hutan_1_style.js"></script><script src="styles/RT_2_style.js"></script><script src="styles/RW_3_style.js"></script><script src="styles/Dusun_4_style.js"></script><script src="styles/kali_5_style.js"></script><script src="styles/Bangunan_6_style.js"></script><script src="styles/JlDesaSeliling_7_style.js"></script><script src="styles/Poin_8_style.js"></script><script src="styles/geometrifix_9_style.js"></script>
+        <script src="./layers/layers.js" type="text/javascript"></script> 
+        <script src="./resources/Autolinker.min.js"></script>
+        <script src="./resources/qgis2web.js"></script>
+    </body>
+</html>
