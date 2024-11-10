@@ -74,6 +74,10 @@
                 z-index: 1000;
                 box-shadow: 0 4px 6px rgba(1, 255, 208, 0.588);
             }
+
+            section {
+                padding-top: 60px;
+            }
             
             .logo {
                 font-size: 1.5rem;
@@ -742,10 +746,12 @@
 
 
         <script>
-                function toggleSidebar() {
-                    document.getElementById("sidebar").classList.toggle("active");
-                }
+            function toggleSidebar() {
+                const sidebar = document.getElementById("sidebar");
+                sidebar.classList.toggle("active");
+            }
         </script>
+
         <script src="resources/qgis2web_expressions.js"></script>
         <script src="resources/proj4.js"></script>
         <script>proj4.defs('EPSG:4326','+proj=longlat +datum=WGS84 +no_defs');</script>
