@@ -59,108 +59,120 @@
         <!-- Custom Styling -->
         <style>
             /* Navbar */
-/* Mengatasi overflow pada body */
-        body {
-            overflow-x: hidden;
-            margin: 0;
-            font-family: Arial, sans-serif;
-        }
+/* General Styles */
+body {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Lora", system-ui;
+  scroll-behavior: smooth;
+  scroll-padding-top: 3rem;
+}
 
-        /* Header */
-        header {
-            background: linear-gradient(135deg, #0056b3, #00aaff);
-            color: #fff;
-            padding: 10px 20px;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-sizing: border-box;
-        }
+/* Header Styles */
+header {
+  position: fixed;
+  height: 60px;
+  padding: 8px 3rem;
+  top: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 9999;
+  background-color: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  transition: background-color 0.3s ease;
+  border-radius: 8px;
+}
 
-        /* Logo */
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            flex: 1; /* Membuat logo fleksibel dan di sisi kiri */
-        }
+.logo {
+  font-size: 28px;
+  font-weight: bold;
+  color: #ffffff; /* Adjust color for visibility */
+}
 
-        /* Navbar */
-        .navbar {
-            list-style: none;
-            display: flex;
-            margin-left: 20px; /* Menambah jarak antara logo dan menu */
-        }
+.hamburger {
+  display: none; /* Hidden by default */
+  cursor: pointer;
+  z-index: 10001; /* Ensure hamburger is clickable above the content */
+}
 
-        .navbar li {
-            margin-left: 20px;
-        }
+.hamburger .line {
+  width: 30px;
+  height: 4px;
+  background-color: #fff; /* Set line color */
+  margin: 5px 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
 
-        .navbar a {
-            color: #fff;
-            text-decoration: none;
-            font-weight: bold;
-        }
+.hamburger .line.change:nth-child(1) {
+  transform: rotate(45deg) translateY(9px);
+}
 
-        /* Hamburger Menu */
-        .hamburger {
-            display: none;
-            font-size: 2rem;
-            cursor: pointer;
-            margin-left: 10px;
-        }
+.hamburger .line.change:nth-child(2) {
+  opacity: 0;
+}
 
-        /* Sidebar */
-        #sidebar {
-            position: fixed;
-            top: 60px; /* Menempatkan sidebar di bawah navbar */
-            left: 0;
-            width: 100%;
-            max-width: 250px;
-            background-color: #0056b3;
-            transform: translateY(-100%);
-            transition: transform 0.3s ease;
-            z-index: 1100;
-        }
+.hamburger .line.change:nth-child(3) {
+  transform: rotate(-45deg) translateY(-9px);
+}
 
-        #sidebar.active {
-            transform: translateY(0);
-        }
+/* Nav Styles */
+.nav-bar {
+  display: flex;
+  align-items: center;
+}
 
-        #sidebar ul {
-            list-style: none;
-            padding: 20px;
-        }
+.nav-bar ul {
+  list-style: none;
+  display: flex;
+  margin: 0;
+}
 
-        #sidebar li {
-            margin-bottom: 20px;
-        }
+.nav-bar li {
+  margin-left: 20px;
+}
 
-        #sidebar a {
-            color: #fff;
-            font-size: 1.2rem;
-            text-decoration: none;
-        }
+.nav-bar a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+}
 
-        /* Media Query untuk mobile */
-        @media (max-width: 768px) {
-            .navbar {
-                display: none; /* Menyembunyikan navbar untuk mobile */
-            }
+/* Media Query for Mobile */
+@media (max-width: 768px) {
+  .hamburger {
+    display: block; /* Show hamburger menu on mobile */
+  }
 
-            .hamburger {
-                display: block; /* Menampilkan hamburger menu */
-            }
+  .nav-bar {
+    display: none; /* Hide nav on mobile */
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+  }
 
-            /* Menampilkan sidebar di bawah navbar */
-            #sidebar {
-                width: 100%;
-                top: 60px; /* Menjaga sidebar di bawah navbar */
-            }
-        }
+  .nav-bar ul {
+    flex-direction: column;
+    padding: 0;
+    margin: 0;
+  }
+
+  .nav-bar.active {
+    display: flex; /* Display nav when active */
+  }
+
+  .nav-bar li {
+    margin: 15px 0;
+  }
+}
 
 
 
@@ -606,29 +618,32 @@
         </style>
     </head>
     <body>
+
+        
         <!-- Navbar -->
-       <header>
-    <nav>
-        <div class="logo">Seliling</div>
-        <div class="hamburger">&#9776;</div>
-        <ul class="navbar">
+<header>
+  <div class="logo">Desa<span class="child-title">Tambakreja</span></div>
+  <div class="hamburger">
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+  </div>
+  <nav class="nav-bar">
+    <ul>
+      <li><a href="#" class="active">Beranda</a></li>
+      <li><a href="#about">Visi dan Misi</a></li>
+      <li class="dropdown">
+        <a href="#explore" class="dropdown-toggle">Explore<i class="fa-solid fa-caret-down"></i></a>
+        <ul class="dropdown-menu">
             <li><a href="#beranda">Beranda</a></li>
-        <li><a href="#visi-misi">Tentang</a></li>
+          <li><a href="#visi-misi">Tentang</a></li>
         <li><a href="#geografis">Peta</a></li>
         <li><a href="#kontak">Kontak</a></li>
         </ul>
-    </nav>
-</header>
-
-<!-- Sidebar -->
-<div id="sidebar">
-    <ul>
-        <li><a href="#beranda">Beranda</a></li>
-        <li><a href="#visi-misi">Tentang</a></li>
-        <li><a href="#geografis">Peta</a></li>
-        <li><a href="#kontak">Kontak</a></li>
+      </li>
     </ul>
-</div>
+  </nav>
+</header>
 
 
         <!-- Beranda Section -->
@@ -739,15 +754,20 @@
 
 
         <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                const hamburger = document.querySelector('.hamburger');
-                const sidebar = document.querySelector('#sidebar');
-    
-                // Toggle sidebar saat hamburger diklik
-                hamburger.addEventListener('click', () => {
-                    sidebar.classList.toggle('active');
-                });
+            document.addEventListener("DOMContentLoaded", () => {
+              const hamburger = document.querySelector(".hamburger");
+              const navBar = document.querySelector(".nav-bar");
+              const lines = document.querySelectorAll(".hamburger .line");
+            
+              // Toggle the active class to show/hide the nav menu
+              hamburger.addEventListener("click", () => {
+                navBar.classList.toggle("active");
+            
+                // Toggle the 'change' class on each line to animate the hamburger icon
+                lines.forEach(line => line.classList.toggle("change"));
+              });
             });
+
         </script>
 
 
