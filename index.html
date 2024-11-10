@@ -63,6 +63,7 @@
 /* Mengatasi overflow pada body */
 body {
     overflow-x: hidden;
+    margin: 0;
 }
 
 /* Header */
@@ -752,23 +753,16 @@ nav {
 
 
         <script>
-                document.addEventListener("DOMContentLoaded", function () {
-                    const hamburger = document.querySelector('.hamburger');
-                    const sidebar = document.querySelector('#sidebar');
-            
-                    // Toggle sidebar
-                    hamburger.addEventListener('click', () => {
-                        sidebar.classList.toggle('active');
-                    });
-            
-                    // Close sidebar when clicking outside
-                    document.addEventListener('click', (e) => {
-                        if (!sidebar.contains(e.target) && !hamburger.contains(e.target)) {
-                            sidebar.classList.remove('active');
-                        }
-                    });
+            document.addEventListener("DOMContentLoaded", function () {
+                const hamburger = document.querySelector('.hamburger');
+                const sidebar = document.querySelector('#sidebar');
+    
+                // Toggle sidebar saat hamburger diklik
+                hamburger.addEventListener('click', () => {
+                    sidebar.classList.toggle('active');
                 });
-            </script>
+            });
+        </script>
 
 
 
