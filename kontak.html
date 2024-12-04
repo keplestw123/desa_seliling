@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desa Seliling</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        /* Navbar */
+        body {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+            scroll-behavior: smooth;
+            scroll-padding-top: 3rem;
+            background: linear-gradient(135deg, #a7f9dc, #ffffff); /* Light background color */
+            color: #333; /* Dark text color for readability */
+            box-sizing: border-box;
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            height: 60px;
+            padding: 0 3rem;
+            top: 0;
+            right: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 9999;
+            background-color: rgba(0, 0, 0, 0.6); /* Slightly darker background for a more modern look */
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #ffffff; /* White color for the logo */
+            letter-spacing: 1px; /* Slight space between letters */
+            text-transform: uppercase;
+        }
+
+        .logo span {
+            color: #0dfa60; /* Add a touch of color for emphasis */
+        }
+
+        /* Hamburger Menu Styles */
+        .hamburger {
+            display: none; /* Hidden by default */
+            cursor: pointer;
+            z-index: 10001; /* Ensure hamburger is clickable above the content */
+        }
+
+        .hamburger .line {
+            width: 30px;
+            height: 4px;
+            background-color: #fff; /* White lines for contrast */
+            margin: 5px 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .hamburger .line.change:nth-child(1) {
+            transform: rotate(45deg) translateY(9px);
+        }
+
+        .hamburger .line.change:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger .line.change:nth-child(3) {
+            transform: rotate(-45deg) translateY(-9px);
+        }
+
+        /* Nav Styles */
+        .nav-bar {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-bar ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+        }
+
+        .nav-bar li {
+            margin-left: 20px;
+        }
+
+        .nav-bar a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 16px;
+            letter-spacing: 1px;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .nav-bar a:hover {
+            color: #0dfa60; /* Hover effect with accent color */
+            transform: scale(1.1);
+        }
+
+        /* Media Query for Mobile */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block; /* Show hamburger menu on mobile */
+            }
+
+            .nav-bar {
+                display: none; /* Hide nav on mobile */
+                position: absolute;
+                top: 60px;
+                right: 0;
+                background-color: rgba(0, 0, 0, 0.9); /* Darker background for mobile */
+                width: 250px;
+                padding: 10px;
+                border-radius: 8px;
+                box-shadow: -2px 0 8px rgba(0, 0, 0, 0.3);
+                transition: transform 0.3s ease-in-out;
+                transform: translateX(100%);
+            }
+
+            .nav-bar.active {
+                display: flex;
+                transform: translateX(0); /* Slide in the nav */
+            }
+
+            .nav-bar ul {
+                flex-direction: column;
+                padding: 0;
+                margin: 0;
+            }
+
+            .nav-bar li {
+                margin: 15px 0;
+            }
+        }
+
+        /* Kontainer Formulir dan Info Kontak */
+        .contact-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto; /* Menengahkan kontainer */
+            padding: 0 20px; /* Tambahkan jarak kanan dan kiri */
+        }
+
+        /* Memusatkan teks di dalam kontainer */
+        .container {
+            text-align: center; /* Memusatkan teks */
+            color: #1c1717; /* Warna teks */
+        }
+
+        /* Formulir Kontak */
+        .contact-form {
+            flex: 1;
+            max-width: 600px;
+            min-width: 300px;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            color: #080707;
+            margin: 0 auto; /* Form selalu berada di tengah */
+        }
+
+        /* Grup Formulir */
+        .contact-form .form-group {
+            margin-bottom: 20px;
+            width: 100%;
+            padding: 0 10px; /* Jarak seragam untuk grup form */
+            box-sizing: border-box;
+        }
+
+        /* Input dan Textarea */
+        .contact-form input,
+        .contact-form textarea {
+            width: calc(100% - 20px);
+            padding: 12px 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            color: #333;
+            margin: 0 auto;
+        }
+
+        .contact-form input {
+            border: 2px solid #8f94fb;
+            background-color: #fff;
+        }
+
+        .contact-form textarea {
+            border: 2px solid #8f94fb;
+            background-color: #fff;
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* Tombol Kirim */
+        .btn-submit {
+            display: block;
+            background: linear-gradient(135deg, #8f94fb, #4e54c8);
+            color: #fff;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s;
+            margin: 0 auto;
+            width: calc(100% - 20px);
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Informasi Kontak */
+        .contact-info {
+            flex: 1;
+            max-width: 600px;
+            min-width: 300px;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            color: #090101;
+            margin: 0 auto; /* Informasi kontak selalu berada di tengah */
+        }
+
+        /* Judul Informasi Kontak */
+        .contact-info h3 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #1c1717;
+        }
+
+        /* Paragraf Informasi Kontak */
+        .contact-info p {
+            margin-bottom: 15px;
+            color: #1c1919;
+            text-align: center; /* Memposisikan teks di tengah */
+        }
+
+        /* Ikon Sosial Media */
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #141010;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 50px;
+            font-size: 1.2rem;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+
+        .social-icons a:hover {
+            transform: scale(1.1);
+            background-color: #8f94fb;
+        }
+
+        /* Responsivitas untuk layar kecil */
+        @media screen and (max-width: 768px) {
+            .contact-container {
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 30px;
+                padding: 0 20px; /* Pastikan jarak tetap ada */
+            }
+
+            .contact-form,
+            .contact-info {
+                max-width: 100%;
+                margin: 0 auto;
+                padding: 20px; /* Tambahkan padding */
+                box-sizing: border-box;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .contact-container {
+                padding: 0 15px; /* Lebih kecil pada layar HP */
+            }
+
+            .contact-section h2 {
+                font-size: 2.5rem;
+            }
+
+            .contact-info h3 {
+                font-size: 1.8rem;
+            }
+
+            .btn-submit {
+                font-size: 1rem;
+                width: calc(100% - 30px);
+            }
+
+            .social-icons a {
+                width: 45px;
+                height: 45px;
+                line-height: 45px;
+            }
+        }
+
+        /* Add margin to the contact section */
+        #contact {
+            margin-top: 80px; /* Adjust this value to create space below the navbar */
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <header>
+        <div class="logo">Desa <span class="child-title">Seliling</span></div>
+        <div class="hamburger" onclick="toggleMenu()">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+        <nav class="nav-bar">
+            <ul>
+                <li><a href="beranda.html" class="active">Beranda</a></li>
+                <li><a href="visi.html" class="scroll-to-visi-misi">Visi & Misi</a></li>
+                <li><a href="index.html">Geografis</a></li>
+                <li><a href="kontak.html">Kontak</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Kontak -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2>Hubungi Kami</h2>
+            <p>Kami siap membantu Anda. Silakan isi formulir di bawah ini atau hubungi kami langsung melalui detail kontak.</p>
+            <div class="contact-container">
+                <!-- Formulir Kontak -->
+                <form class="contact-form">
+                    <div class="form-group">
+                        <label for="name">Nama</label>
+                        <input type="text" id="name" name="name" placeholder="Masukkan nama Anda" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Masukkan email Anda" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Pesan</label>
+                        <textarea id="message" name="message" placeholder="Tulis pesan Anda di sini..." rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit">Kirim Pesan</button>
+                </form>
+        
+                <!-- Informasi Kontak -->
+                <div class="contact-info">
+                    <h3>Detail Kontak</h3>
+                    <p><strong>Alamat:</strong> Jl. Pemandian Timur KM. 7, Seliling, Alian</p>
+                    <p><strong>Email:</strong> info@desaseliling.com</p>
+                    <p><strong>Telepon:</strong> +62 812 3456 7890</p ```html
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function toggleMenu() {
+            const navBar = document.querySelector('.nav-bar');
+            const lines = document.querySelectorAll('.hamburger .line');
+            navBar.classList.toggle('active');
+            lines.forEach(line => line.classList.toggle('change'));
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desa Seliling</title>
+    <style>
+        /* Navbar */
+        body {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+            scroll-behavior: smooth;
+            scroll-padding-top: 3rem;
+            background-color: #f4f4f4; /* Light background color */
+            color: #333; /* Dark text color for readability */
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            height: 60px;
+            padding: 0 3rem;
+            top: 0;
+            right: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 9999;
+            background-color: rgba(0, 0, 0, 0.6); /* Slightly darker background for a more modern look */
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #ffffff; /* White color for the logo */
+            letter-spacing: 1px; /* Slight space between letters */
+            text-transform: uppercase;
+        }
+
+        .logo span {
+            color: #0dfa60; /* Add a touch of color for emphasis */
+        }
+
+        /* Hamburger Menu Styles */
+        .hamburger {
+            display: none; /* Hidden by default */
+            cursor: pointer;
+            z-index: 10001; /* Ensure hamburger is clickable above the content */
+        }
+
+        .hamburger .line {
+            width: 30px;
+            height: 4px;
+            background-color: #fff; /* White lines for contrast */
+            margin: 5px 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .hamburger .line.change:nth-child(1) {
+            transform: rotate(45deg) translateY(9px);
+        }
+
+        .hamburger .line.change:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger .line.change:nth-child(3) {
+            transform: rotate(-45deg) translateY(-9px);
+        }
+
+        /* Nav Styles */
+        .nav-bar {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-bar ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+        }
+
+        .nav-bar li {
+            margin-left: 20px;
+        }
+
+        .nav-bar a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 16px;
+            letter-spacing: 1px;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .nav-bar a:hover {
+            color: #0dfa60; /* Hover effect with accent color */
+            transform: scale(1.1);
+        }
+
+        /* Media Query for Mobile */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block; /* Show hamburger menu on mobile */
+            }
+
+            .nav-bar {
+                display: none; /* Hide nav on mobile */
+                position: absolute;
+                top: 60px;
+                right: 0;
+                background-color: rgba(0, 0, 0, 0.9); /* Darker background for mobile */
+                width: 250px;
+                padding: 10px;
+                border-radius: 8px;
+                box-shadow: -2px 0 8px rgba(0, 0, 0, 0.3);
+                transition: transform 0.3s ease-in-out;
+                transform: translateX(100%);
+            }
+
+            .nav-bar.active {
+                display: flex;
+                transform: translateX(0); /* Slide in the nav */
+            }
+
+            .nav-bar ul {
+                flex-direction: column;
+                padding: 0;
+                margin: 0;
+            }
+
+            .nav-bar li {
+                margin: 15px 0;
+            }
+        }
+
+        /* Additional styles for the rest of the page */
+        #visi-misi {
+            background: linear-gradient(135deg, #a7f9dc, #ffffff);
+            padding: 40px 20px;
+            width: 100%;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+            overflow: auto;
+            margin-top: 0; /* Set margin-top to 0 to remove space below the navbar */
+        }
+
+        .visi-misi-text {
+            text-align: center;
+            width: 100%;
+            max-width: 1300px;
+            padding: 40px;
+            box-sizing: border-box;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin: 30px auto;
+            transition: transform 0.3s ease;
+        }
+
+        .visi-misi-text:hover {
+            transform: scale(1.02); /* Efek zoom saat hover */
+        }
+
+        .visi-misi-text h2 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .visi {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .misi {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        ul {
+            list-style-type: none; /* Menghilangkan bullet point */
+            padding: 0;
+        }
+
+        li {
+            margin: 10px 0; /* Jarak antar item */
+            font-size: 1.1rem;
+            position: relative;
+            padding-left: 20px; /* Ruang untuk bullet */
+        }
+
+        /* Remove checkmark */
+        li::before {
+            /* content: '✔'; */ /* Remove or comment out this line to eliminate the checkmark */
+            position: absolute;
+            left: 0;
+            color: #4CAF50; /* Warna bullet */
+        }
+
+        .foto-kegiatan {
+            margin-top: 30px;
+            width: 100%;
+            text-align: center;
+            padding: 0 10px;
+            box-sizing: border-box;
+        }
+
+        .foto-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+            padding: 0 10px;
+            box-sizing: border-box;
+        }
+
+        .foto-item {
+            position: relative;
+            overflow: hidden; /* Menyembunyikan bagian gambar yang melampaui */
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .foto-item:hover {
+            transform: scale(1.05); /* Efek zoom saat hover */
+        }
+
+        .foto-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        .foto-description {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            opacity: 0; /* Mulai dengan transparansi */
+            transition: opacity 0.3s ease;
+        }
+
+        .foto-item:hover .foto-description {
+            opacity: 1; /* Tampilkan deskripsi saat hover */
+        }
+
+        @media (max-width: 480px) {
+            #visi-misi {
+                padding: 15px;
+            }
+
+            .visi-misi-text {
+                padding: 20px;
+                width: 100%;
+                max-width: 100%;
+                margin: 10px auto;
+            }
+
+            .visi-misi-text h2 {
+                font-size: 1.8rem;
+            }
+
+            .visi-misi-text .visi,
+            .visi-misi-text .misi {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            #visi-misi {
+                padding: 25px;
+            }
+
+            .visi-misi-text {
+                max-width: 90%;
+            }
+
+            .visi-misi-text h2 {
+                font-size: 2rem;
+            }
+
+            .visi-misi-text .visi,
+            .visi-misi-text .misi {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <header>
+        <div class="logo">Desa <span class="child-title">Seliling</span></div>
+        <div class="hamburger" onclick="toggleMenu()">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+        <nav class="nav-bar">
+            <ul>
+                <li><a href="beranda.html" class="active">Beranda</a></li>
+                <li><a href="visi.html" class="scroll-to-visi-misi">Visi & Misi</a></li>
+                <li><a href="index.html">Geografis</a></li>
+                <li><a href="kontak.html">Kontak</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Visi dan Misi Section -->
+    <section id="visi-misi">
+        <div class="container">
+            <div class="visi-misi-text">
+                <h2>Visi dan Misi Desa Seliling</h2>
+                <div class="visi">
+                    <p><strong>Visi :</strong> Mewujudkan Desa Seliling yang Maju, Sejahtera, dan Berbudaya, dengan masyarakat yang mandiri, berdaya saing, dan harmonis dalam keberagaman.</p>
+                </div>
+                <div class="misi">
+                    <p><strong>Misinya</strong> yakni untuk :</p>
+                    <ul>
+                        <li><strong>Meningkatkan Kualitas Hidup Masyarakat:</strong> Berfokus pada peningkatan taraf hidup masyarakat melalui program-program pemberdayaan ekonomi, penyediaan fasilitas kesehatan, dan pembangunan infrastruktur yang memadai.</li>
+                        <li><strong>Peningkatan Infrastruktur Desa:</strong> Meningkatkan kualitas dan kuantitas infrastruktur desa, seperti jalan, sarana transportasi, air bersih, dan sistem energi untuk mendukung pertumbuhan ekonomi dan kenyamanan hidup.</li>
+                        <li><strong>Meningkatkan Pendidikan dan Kesehatan:</strong> Memastikan akses pendidikan yang berkualitas bagi semua lapisan masyarakat serta peningkatan pelayanan kesehatan yang merata di seluruh wilayah desa.</li>
+                        <li><strong>Pelestarian Nilai Budaya dan Lingkungan:</strong> Melestarikan tradisi dan budaya lokal desa yang kaya serta menjaga keberlanjutan lingkungan hidup dengan mengembangkan program-program yang ramah lingkungan.</li>
+                        <li><strong>Pemberdayaan Masyarakat dan Keterlibatan Aktif:</strong> Mendorong partisipasi aktif seluruh warga dalam pembangunan desa dan pemberdayaan masyarakat melalui pelatihan keterampilan, kegiatan sosial, dan kolaborasi antara pemerintah desa dan masyarakat.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Kontainer untuk Foto Kegiatan Desa -->
+            <div class="foto-kegiatan">
+                <h3>Kegiatan Desa</h3>
+                <div class="foto-grid">
+                    <div class="foto-item">
+                        <img src="images/kegiatan1.png" alt="Kegiatan Desa 1">
+                        <div class="foto-description">
+                            <p>Pelatihan keterampilan untuk masyarakat dalam meningkatkan ekonomi desa.</p>
+                        </div>
+                    </div>
+                    <div class="foto-item">
+                        <img src="images/kegiatan2.png" alt="Kegiatan Desa 2">
+                        <div class="foto-description">
+                            <p>Program sanitasi untuk memastikan kebersihan dan kesehatan warga desa.</p>
+                        </div>
+                    </div>
+                    <div class="foto-item">
+                        <img src="images/kegiatan3.jpg" alt="Kegiatan Desa 3">
+                        <div class="foto-description">
+                            <p>Penyuluhan lingkungan hidup untuk menjaga kelestarian alam.</p>
+                        </div>
+                    </div>
+                    <div class="foto-item">
+                        <img src="images/kegiatan4.png" alt="Kegiatan Desa 4">
+                        <div class="foto-description">
+                            <p>Pembangunan infrastruktur jalan desa untuk mempermudah akses warga.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function toggleMenu() {
+            const navBar = document.querySelector('.nav-bar');
+            const lines = document.querySelectorAll('.hamburger .line');
+            navBar.classList.toggle('active');
+            lines.forEach(line => line.classList.toggle('change'));
+        }
+    </script>
+</body>
+</html>

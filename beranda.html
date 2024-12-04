@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desa Seliling</title>
+    <style>
+        /* Navbar */
+        body {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+            scroll-behavior: smooth;
+            scroll-padding-top: 3rem;
+            background-color: #f4f4f4; /* Light background color */
+            color: #333; /* Dark text color for readability */
+            overflow: hidden; /* Menghapus scroll */
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            height: 60px;
+            padding: 0 3rem;
+            top: 0;
+            right: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 9999;
+            background-color: rgba(0, 0, 0, 0.6); /* Slightly darker background for a more modern look */
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #ffffff; /* White color for the logo */
+            letter-spacing: 1px; /* Slight space between letters */
+            text-transform: uppercase;
+        }
+
+        .logo span {
+            color: #0dfa60; /* Add a touch of color for emphasis */
+        }
+
+        /* Hamburger Menu Styles */
+        .hamburger {
+            display: none; /* Hidden by default */
+            cursor: pointer;
+            z-index: 10001; /* Ensure hamburger is clickable above the content */
+        }
+
+        .hamburger .line {
+            width: 30px;
+            height: 4px;
+            background-color: #fff; /* White lines for contrast */
+            margin: 5px 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .hamburger .line.change:nth-child(1) {
+            transform: rotate(45deg) translateY(9px);
+        }
+
+        .hamburger .line.change:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger .line.change:nth-child(3) {
+            transform: rotate(-45deg) translateY(-9px);
+        }
+
+        /* Nav Styles */
+        .nav-bar {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-bar ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+        }
+
+        .nav-bar li {
+            margin-left: 20px;
+        }
+
+        .nav-bar a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 16px;
+            letter-spacing: 1px;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .nav-bar a:hover {
+            color: #0dfa60; /* Hover effect with accent color */
+            transform: scale(1.1);
+        }
+
+        /* Media Query for Mobile */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block; /* Show hamburger menu on mobile */
+            }
+
+            .nav-bar {
+                display: none; /* Hide nav on mobile */
+                position: absolute;
+                top: 60px;
+                right: 0;
+                background-color: rgba(0, 0, 0, 0.9); /* Darker background for mobile */
+                width: 250px;
+                padding: 10px;
+                border-radius: 8px;
+                box-shadow: -2px 0 8px rgba(0, 0, 0, 0.3);
+                transition: transform 0.3s ease-in-out;
+                transform: translateX(100%);
+            }
+
+            .nav-bar.active {
+                display: flex;
+                transform: translateX(0); /* Slide in the nav */
+            }
+
+            .nav-bar ul {
+                flex-direction: column;
+                padding: 0;
+                margin: 0;
+            }
+
+            .nav-bar li {
+                margin: 15px 0;
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            background: url('images/bg.png') no-repeat center center/cover;
+            color: #fff;
+            text-align: center;
+            padding: 5rem 2rem;
+            height: 100vh;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
+
+        .hero h1:hover {
+            color: #ffcc00; /* Warna saat hover */
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            max-width: 700px;
+            text-align: center;
+            font-style: italic;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .hero p:hover {
+            transform: scale(1.05); /* Efek zoom saat hover */
+            color: #ffcc00; /* Warna saat hover */
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background-color: #333;
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cta-button:hover {
+            background-color: #555;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button:active {
+            transform: translateY(1px);
+        }
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem; /* Ukuran font lebih kecil di perangkat mobile */
+            }
+
+            .hero p {
+                font-size: 1.2rem; /* Ukuran font lebih kecil di perangkat mobile */
+            }
+
+            .cta-button {
+                padding: 0.6rem 1.5rem; /* Ukuran tombol lebih kecil di perangkat mobile */
+                font-size: 1rem; /* Ukuran font tombol lebih kecil di perangkat mobile */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem; /* Ukuran font lebih kecil di perangkat sangat kecil */
+            }
+
+            .hero p {
+                font-size: 1rem; /* Ukuran font lebih kecil di perangkat sangat kecil */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <header>
+        <div class="logo">Desa <span class="child-title">Seliling</span></div>
+        <div class="hamburger" onclick="toggleMenu()">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+        <nav class="nav-bar">
+            <ul>
+                <li><a href="beranda.html" class="active">Beranda</a></li>
+                <li><a href="visi.html" class="scroll-to-visi-misi">Visi & Misi</a></li>
+                <li><a href="index.html">Geografis</a></li>
+                <li><a href="kontak.html">Kontak</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Beranda Section -->
+    <section id="beranda">
+        <div class="hero">
+            <h1>Selamat Datang di Desa Seliling</h1>
+            <p>Seliling adalah sebuah desa di kecamatan Alian, Kebumen, Jawa Tengah, Indonesia. Desa Seliling berjarak sekitar 7 km dari pusat pemerintahan Kabupaten Kebumen, dan 7 km dari kecamatan Alian. Luas wilayah Desa Seliling adalah 2,41 km². Jumlah penduduk Desa Seliling adalah sekitar 5.235 jiwa yang terdiri dari 2.620 jiwa laki-laki dan 2.615 jiwa perempuan.</p>
+            <a href="index.html" class="cta-button">Lihat Peta</a>
+        </div>
+    </section>
+
+    <script>
+        function toggleMenu() {
+            const navBar = document.querySelector('.nav-bar');
+            const lines = document.querySelectorAll('.hamburger .line');
+            navBar.classList.toggle('active');
+            lines.forEach(line => line.classList.toggle('change'));
+        }
+    </script>
+</body>
+</html>
